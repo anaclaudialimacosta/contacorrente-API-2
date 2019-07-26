@@ -1,5 +1,6 @@
 package com.db1.contaCorrente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.db1.contaCorrente.infra.Verificadora;
@@ -17,8 +18,8 @@ public class ContaCorrente {
 	public ContaCorrente (String agencia,  String numero, String cliente) {
 		
 		Verificadora.VerificaStringValida(agencia, "Deve ser informada uma agência válida");
-		Verificadora.VerificaStringValida(numero, "Deve ser informada uma número válido");
-		Verificadora.VerificaStringValida(cliente, "Deve ser informada um cliente válido");
+		Verificadora.VerificaStringValida(numero, "Deve ser informado um número válido");
+		Verificadora.VerificaStringValida(cliente, "Deve ser informado um cliente válido");
 
 		
 		if((agencia != null) && !agencia.isEmpty()) {
@@ -31,7 +32,27 @@ public class ContaCorrente {
 			} 
 		}
 		
+		this.saldo = 0;
+		this.historico = new ArrayList<>();	
+		
 	}
+	
+	public String getCliente() {
+		return this.cliente;
+	}
+	public String getAgencia() {
+		return this.agencia;
+	}
+	public String getNumero() {
+		return this.numero;
+	}
+	public List<String> getHistorico(){
+		return this.historico;
+	}
+	public double getSaldo() {
+		return this.saldo;
+	}
+	
 	
 	
 	
