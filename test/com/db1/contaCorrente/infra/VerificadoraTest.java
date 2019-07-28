@@ -6,13 +6,13 @@ import com.db1.contaCorrente.infra.Verificadora;
 
 public class VerificadoraTest {
 
-
+	//Testes da String Válida
 	
 	@Test
 	public void deveRetornarUmaExcessaoPorqueEstaNull() {
 		String mensagem = null;
 		try {
-			Verificadora.VerificaStringValida(null, "Valor não pode ser nulo");
+			Verificadora.verificaStringValida(null, "Valor não pode ser nulo");
 			
 		} catch (RuntimeException e) {
 			mensagem = e.getMessage();
@@ -25,7 +25,7 @@ public class VerificadoraTest {
 	public void deveRetornarUmaExcessaoPorqueEstaVazio() {
 		String mensagem = null;
 		try {
-			Verificadora.VerificaStringValida("", "A String está Vazia");
+			Verificadora.verificaStringValida("", "A String está Vazia");
 			
 		} catch (RuntimeException e) {
 			mensagem = e.getMessage();
@@ -35,10 +35,10 @@ public class VerificadoraTest {
 	}
 	
 	@Test
-	public void naoDeveRetornarUmaExcessao() {
+	public void naoDeveRetornarUmaExcessaoString() {
 		String mensagem = null;
 		try {
-			Verificadora.VerificaStringValida("1234ana", "A String não pode ser vazia e nem null");
+			Verificadora.verificaStringValida("1234ana", "A String não pode ser vazia e nem null");
 		}catch(RuntimeException e) {
 			mensagem = e.getMessage();
 		}
@@ -47,5 +47,54 @@ public class VerificadoraTest {
 		
 	}
 	
+	//Testes de Double maior que 0
+	
+	@Test
+	public void deveRetornarExcessaoQuandoValorDoubleNull() {
+		String mensagem = null;
+		try {
+			Verificadora.valorMaiorQueZero(null, "Valor deve ser maior que zero");
+			
+		}catch(RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+		Assert.assertEquals("Valor deve ser maior que zero", mensagem);
+	}
+	
+	@Test
+	public void deveRetornarExcessaoQuandoValorDoubleZero() {
+		String mensagem = null;
+		try {
+			Verificadora.valorMaiorQueZero(0.0, "Valor deve ser maior que zero");
+			
+		}catch(RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+		Assert.assertEquals("Valor deve ser maior que zero", mensagem);
+	}
+	
+	@Test
+	public void deveRetornarExcessaoQuandoValorDoubleMenorQueZero() {
+		String mensagem = null;
+		try {
+			Verificadora.valorMaiorQueZero(-0.2, "Valor deve ser maior que zero");
+			
+		}catch(RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+		Assert.assertEquals("Valor deve ser maior que zero", mensagem);
+	}
+
+	@Test
+	public void naoDeveRetornarexcessaoDouble() {
+		String mensagem = null;
+		try {
+			Verificadora.valorMaiorQueZero(2.0, "Valor deve ser maior que 0");
+		}catch(RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+					
+		Assert.assertNull(mensagem);
+	}
 
 }

@@ -8,7 +8,7 @@ import com.db1.contaCorrente.infra.Verificadora;
 
 public class ContaCorrente {
 
-	private double saldo;
+	private Double saldo;
 	private List<String> historico;
 	private String cliente;
 	private String numero;
@@ -17,9 +17,9 @@ public class ContaCorrente {
 	
 	public ContaCorrente (String agencia,  String numero, String cliente) {
 		
-		Verificadora.VerificaStringValida(agencia, "Deve ser informada uma agência válida");
-		Verificadora.VerificaStringValida(numero, "Deve ser informado um número válido");
-		Verificadora.VerificaStringValida(cliente, "Deve ser informado um cliente válido");
+		Verificadora.verificaStringValida(agencia, "Deve ser informada uma agência válida");
+		Verificadora.verificaStringValida(numero, "Deve ser informado um número válido");
+		Verificadora.verificaStringValida(cliente, "Deve ser informado um cliente válido");
 
 		
 		if((agencia != null) && !agencia.isEmpty()) {
@@ -32,10 +32,29 @@ public class ContaCorrente {
 			} 
 		}
 		
-		this.saldo = 0;
+		this.saldo = 0.0;
 		this.historico = new ArrayList<>();	
 		
 	}
+	
+	public void depositar (Double valor) {
+		Verificadora.valorMaiorQueZero(valor, "Valor depositado deve ser maior que 0");
+		
+		this.saldo += valor;
+		this.historico.add("Deposito: " + valor);
+		
+	}
+	
+	public void sacar (Double valor) {
+		
+		Verificadora.valorMaiorQueZero(valor, "Valor sacado deve ser maior que 0");
+		Verificadora.valorMaiorQueZero((this.saldo - valor), "Saldo insuficiente para o saque");
+		
+		this.saldo -= valor;
+		this.historico.add("Saque: " + valor);
+		
+	}
+	
 	
 	public String getCliente() {
 		return this.cliente;
@@ -49,11 +68,12 @@ public class ContaCorrente {
 	public List<String> getHistorico(){
 		return this.historico;
 	}
-	public double getSaldo() {
+	public Double getSaldo() {
 		return this.saldo;
 	}
 	
 	
+
 	
 	
 }
