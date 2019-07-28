@@ -6,6 +6,8 @@ import com.db1.contaCorrente.ContaCorrente;
 
 public class ContaCorrenteTest {
 	
+	//Testes do Construtor 
+	
 	@Test
 	public void deveRetornarErroQuandoInformadoAgenciaInvalida() {
 		String mensagem = null;
@@ -55,6 +57,8 @@ public class ContaCorrenteTest {
 		Assert.assertTrue(conta.getHistorico().size()==0);
 	}
 	
+	//Testes Depositar
+	
 	@Test
 	public void deveRetornarExcecaoQuandoValorDepositadoInvalido() {
 		ContaCorrente conta = new ContaCorrente ("12345", "123456", "Ana");
@@ -94,6 +98,65 @@ public class ContaCorrenteTest {
 		
 	}
 	
+	//Testes Sacar
 	
+	@Test
+	public void deveRetornarExcecaoQuandoValorSacadoInvalido() {
+		ContaCorrente conta = new ContaCorrente ("12345", "123456", "Ana");
+		conta.depositar(2.0);
+		
+		String mensagem = null;
+		try {
+			conta.sacar(-0.1);
+		} catch (RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+		Assert.assertEquals("Valor sacado deve ser maior que 0", mensagem);
+		Assert.assertTrue(conta.getHistorico().size() == 1);  //Por conta do deposito realizado acima
+		Assert.assertEquals(2.0, conta.getSaldo(), 0.0001);
+		
+	}
+	
+	@Test
+	public void deveRetornarExcecaoQuandoValorSacadoNulo() {
+		ContaCorrente conta = new ContaCorrente ("12345", "123456", "Ana");
+		String mensagem = null;
+		try {
+			conta.sacar(null);
+		} catch (RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+		Assert.assertEquals("Valor sacado deve ser maior que 0", mensagem);
+		Assert.assertTrue(conta.getHistorico().isEmpty());
+		Assert.assertEquals(0.0, conta.getSaldo(), 0.0001);
+		
+	}
+	
+	@Test
+	public void deveRetornarExcecaoQuandoValorComSaldoInsuficiente() {
+		ContaCorrente conta = new ContaCorrente ("12345", "123456", "Ana");
+		String mensagem = null;
+		try {
+			conta.sacar(2.0);
+		} catch (RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+		Assert.assertEquals( "Saldo insuficiente para o saque", mensagem);
+		Assert.assertTrue(conta.getHistorico().isEmpty());
+		Assert.assertEquals(0.0, conta.getSaldo(), 0.0001);
+	}
+	
+	@Test
+	public void deveSacarValor() {
+		ContaCorrente conta = new ContaCorrente ("12345", "123456", "Ana");
+		conta.depositar(20.0);
+		conta.sacar(2.0);
+		
+		Assert.assertTrue(conta.getHistorico().size() == 2);  //Por conta do deposito realizado acima
+		Assert.assertEquals(18.0, conta.getSaldo(), 0.0001);
+		Assert. assertEquals("Deposito: 20.0", conta.getHistorico().get(0));
+		Assert. assertEquals("Saque: 2.0", conta.getHistorico().get(1));
+		
+	}
 	
 }
