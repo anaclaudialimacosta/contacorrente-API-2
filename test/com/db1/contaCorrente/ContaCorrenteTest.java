@@ -101,9 +101,9 @@ public class ContaCorrenteTest {
 	//Testes Sacar
 	
 	@Test
-	public void deveRetornarExcecaoQuandoValorSacadoInvalido() {
+	public void deveRetornarExcecaoQuandoValorSacadoNegativo() {
 		ContaCorrente conta = new ContaCorrente ("12345", "123456", "Ana");
-		conta.depositar(2.0);
+		conta.depositar(2.0); //Para retornar a excessão correta
 		
 		String mensagem = null;
 		try {
@@ -123,6 +123,21 @@ public class ContaCorrenteTest {
 		String mensagem = null;
 		try {
 			conta.sacar(null);
+		} catch (RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+		Assert.assertEquals("Valor sacado deve ser maior que 0", mensagem);
+		Assert.assertTrue(conta.getHistorico().isEmpty());
+		Assert.assertEquals(0.0, conta.getSaldo(), 0.0001);
+		
+	}
+	
+	@Test
+	public void deveRetornarExcecaoQuandoValorSacadoZero() {
+		ContaCorrente conta = new ContaCorrente ("12345", "123456", "Ana");
+		String mensagem = null;
+		try {
+			conta.sacar(0.0);
 		} catch (RuntimeException e) {
 			mensagem = e.getMessage();
 		}
