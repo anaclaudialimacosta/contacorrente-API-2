@@ -134,5 +134,17 @@ public class VerificadoraTest {
 		}
 		Assert.assertEquals("Valor deve ser maior ou igual a zero", mensagem);
 	}
+	
+	@Test
+	public void deveRetornarExcessaoQuandoValorNulo() {
+		String mensagem = null;
+		try {
+			Verificadora.valorMaiorOuIgualAZero(null, "Valor deve ser maior ou igual a zero");
+			
+		}catch(RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+		Assert.assertEquals("Valor deve ser maior ou igual a zero", mensagem);
+	}
 
 }

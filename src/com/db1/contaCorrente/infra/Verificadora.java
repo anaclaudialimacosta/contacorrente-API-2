@@ -15,7 +15,7 @@ public class Verificadora {
 	}
 	
 	public static void valorMaiorOuIgualAZero(Double value, String message) {
-		if(value<0.0) {
+		if(value==null || value<0.0) {
 			throw new RuntimeException(message);
 		}
 	}
