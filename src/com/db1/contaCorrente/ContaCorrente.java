@@ -48,7 +48,7 @@ public class ContaCorrente {
 	public void sacar (Double valor) {
 		
 		Verificadora.valorMaiorQueZero(valor, "Valor sacado deve ser maior que 0");
-		Verificadora.valorMaiorQueZero((this.saldo - valor), "Saldo insuficiente para o saque");
+		Verificadora.valorMaiorOuIgualAZero((this.saldo - valor), "Saldo insuficiente para o saque");
 		
 		this.saldo -= valor;
 		this.historico.add("Saque: " + valor);

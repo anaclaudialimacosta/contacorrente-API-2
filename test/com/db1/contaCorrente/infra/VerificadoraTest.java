@@ -96,5 +96,43 @@ public class VerificadoraTest {
 					
 		Assert.assertNull(mensagem);
 	}
+	
+	//Teste Double Maior Ou Igual a 0
+	
+	@Test
+	public void naoDeveRetornarExcessaoQuandoValorIgualAZero() {
+		String mensagem = null;
+		try {
+			Verificadora.valorMaiorOuIgualAZero(0.0, "Valor deve ser maior ou igual a 0");
+		}catch(RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+					
+		Assert.assertNull(mensagem);
+	}
+	
+	@Test
+	public void naoDeveRetornarExcessaoQuandoValorMaiorQueZero() {
+		String mensagem = null;
+		try {
+			Verificadora.valorMaiorOuIgualAZero(1.0, "Valor deve ser maior ou igual a 0");
+		}catch(RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+					
+		Assert.assertNull(mensagem);
+	}
+	
+	@Test
+	public void deveRetornarExcessaoQuandoValorMenorQueZero() {
+		String mensagem = null;
+		try {
+			Verificadora.valorMaiorOuIgualAZero(-0.2, "Valor deve ser maior ou igual a zero");
+			
+		}catch(RuntimeException e) {
+			mensagem = e.getMessage();
+		}
+		Assert.assertEquals("Valor deve ser maior ou igual a zero", mensagem);
+	}
 
 }
